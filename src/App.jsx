@@ -7,11 +7,15 @@ export const App = () => {
   const [query, setQuery] = useState('');
 
   const sanitizedQuery = query.trim().toLocaleLowerCase();
-  const visibleMovies = moviesFromServer.filter(
-    ({ title, description }) =>
-      title.toLocaleLowerCase().includes(sanitizedQuery) ||
-      description.toLocaleLowerCase().includes(sanitizedQuery),
-  );
+  let visibleMovies = [...moviesFromServer];
+
+  if (query) {
+    visibleMovies = visibleMovies.filter(
+      ({ title, description }) =>
+        title.toLocaleLowerCase().includes(sanitizedQuery) ||
+        description.toLocaleLowerCase().includes(sanitizedQuery),
+    );
+  }
 
   const handleSearchInput = event => {
     setQuery(event.target.value);
